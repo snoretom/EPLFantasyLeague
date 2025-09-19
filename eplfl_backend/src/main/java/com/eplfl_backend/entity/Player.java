@@ -16,6 +16,11 @@ public class Player {
     @Size(max = 100)
     @Column(nullable = false)
     private String name;
+
+    @NotBlank
+    @Size(max =100)
+    @Column(nullable = false)
+    private String koreanName;
     
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -39,20 +44,32 @@ public class Player {
     @Column(columnDefinition = "int default 0") 
     private Integer gamesPlayed = 0;
     
-    @Column(columnDefinition = "boolean default true")
-    private Boolean available = true;
     
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PlayerStatus status = PlayerStatus.AVAILABLE;
+
+
+
+
     // 기본 생성자
     public Player() {}
     
     // 생성자
-    public Player(String name, Position position, String team, BigDecimal price) {
+    public Player(String name, Position position, String team, BigDecimal price, String koreanName) {
         this.name = name;
         this.position = position;
         this.team = team;
         this.price = price;
+        this.koreanName = koreanName;
+        this.status = PlayerStatus.AVAILABLE;
     }
     
+
+
+
+
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -74,21 +91,34 @@ public class Player {
     
     public Integer getGamesPlayed() { return gamesPlayed; }
     public void setGamesPlayed(Integer gamesPlayed) { this.gamesPlayed = gamesPlayed; }
+
+    public String getKoreanName() { return koreanName; }
+    public void setKoreanName(String koreanName) { this.koreanName = koreanName; }
+
+    public PlayerStatus getStatus() { return status; }
+    public void setStatus(PlayerStatus status) { this.status = status; }
     
-    public Boolean getAvailable() { return available; }
-    public void setAvailable(Boolean available) { this.available = available; }
-    
+
+
+
+
     // 평균 점수 계산
     public Double getAveragePoints() {
         if (gamesPlayed == 0) return 0.0;
         return (double) totalPoints / gamesPlayed;
     }
     
+
+
+
+
     @Override
     public String toString() {
         return "Player{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", koreanName='" + koreanName + '\'' + 
+                ", status=" + status + 
                 ", position=" + position +
                 ", team='" + team + '\'' +
                 ", price=" + price +

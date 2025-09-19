@@ -1,7 +1,15 @@
-server:
-  port: 8081
-
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
   h2:
     console:
       enabled: true
+server:
+  port: 8081
